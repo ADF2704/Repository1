@@ -1,0 +1,74 @@
+{
+	"name": "AzureSqlDatabaseSinkDataset",
+	"properties": {
+		"description": "Connection to your destination data store.",
+		"linkedServiceName": {
+			"referenceName": "SqlDatabase1",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"sinkTableName": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "Receipt_Number",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Date",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Time",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Product",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Quantity",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Price_each",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Total",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Payment_Type_cash_credit",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Customer",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Store",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Cost_of_goods",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Shipment_date",
+				"type": "nvarchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": {
+				"value": "@dataset().sinkTableName",
+				"type": "Expression"
+			}
+		}
+	}
+}
