@@ -1,0 +1,72 @@
+{
+	"name": "Sales",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Blob1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "Sales.csv",
+				"container": "input1"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "Receipt Number",
+				"type": "String"
+			},
+			{
+				"name": "Date",
+				"type": "String"
+			},
+			{
+				"name": "Time",
+				"type": "String"
+			},
+			{
+				"name": "Product",
+				"type": "String"
+			},
+			{
+				"name": "Quantity",
+				"type": "String"
+			},
+			{
+				"name": "Price $/each",
+				"type": "String"
+			},
+			{
+				"name": "Total",
+				"type": "String"
+			},
+			{
+				"name": "Payment Type (cash / credit)",
+				"type": "String"
+			},
+			{
+				"name": "Customer",
+				"type": "String"
+			},
+			{
+				"name": "Store",
+				"type": "String"
+			},
+			{
+				"name": "Cost of goods",
+				"type": "String"
+			},
+			{
+				"name": "Shipment date",
+				"type": "String"
+			}
+		]
+	}
+}

@@ -1,0 +1,90 @@
+{
+	"name": "CopyData",
+	"properties": {
+		"description": "Blob to SQL database",
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "Sales",
+						"type": "DatasetReference"
+					},
+					"name": "Sales"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "SalesSqlTable1",
+						"type": "DatasetReference"
+					},
+					"name": "sink1",
+					"rejectedDataLinkedService": {
+						"referenceName": "Blob1",
+						"type": "LinkedServiceReference"
+					}
+				}
+			],
+			"transformations": [],
+			"scriptLines": [
+				"source(output(",
+				"          {Receipt Number} as string,",
+				"          Date as date,",
+				"          Time as timestamp,",
+				"          Product as string,",
+				"          Quantity as string,",
+				"          {Price $/each} as string,",
+				"          Total as string,",
+				"          {Payment Type (cash / credit)} as string,",
+				"          Customer as string,",
+				"          Store as string,",
+				"          {Cost of goods} as string,",
+				"          {Shipment date} as date",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> Sales",
+				"Sales sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          Receipt_Number as integer,",
+				"          Date as timestamp,",
+				"          Time as timestamp,",
+				"          Product as string,",
+				"          Quantity as integer,",
+				"          Price_each as integer,",
+				"          Total as integer,",
+				"          Payment_Type_cash_credit as string,",
+				"          Customer as string,",
+				"          Store as string,",
+				"          Cost_of_goods as integer,",
+				"          Shipment_date as timestamp",
+				"     ),",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     truncate:true,",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError',",
+				"     mapColumn(",
+				"          Receipt_Number = {Receipt Number},",
+				"          Date,",
+				"          Time,",
+				"          Product,",
+				"          Quantity,",
+				"          Price_each = {Price $/each},",
+				"          Total,",
+				"          Payment_Type_cash_credit = {Payment Type (cash / credit)},",
+				"          Customer,",
+				"          Store,",
+				"          Cost_of_goods = {Cost of goods},",
+				"          Shipment_date = {Shipment date}",
+				"     )) ~> sink1"
+			]
+		}
+	}
+}
