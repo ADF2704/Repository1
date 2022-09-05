@@ -1,0 +1,35 @@
+{
+	"name": "StoreinfoDB",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "SqlServer1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "SqlServerTable",
+		"schema": [
+			{
+				"name": "Store_ID",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "StoreSize",
+				"type": "nvarchar"
+			},
+			{
+				"name": "NumberOfCheckOuts",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "DateOpened",
+				"type": "nvarchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "storeinfo"
+		}
+	}
+}

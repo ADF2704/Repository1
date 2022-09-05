@@ -1,0 +1,106 @@
+{
+	"name": "Stores",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "Stores",
+						"type": "DatasetReference"
+					},
+					"name": "Stores"
+				},
+				{
+					"dataset": {
+						"referenceName": "StoreinfoDB",
+						"type": "DatasetReference"
+					},
+					"name": "Storeinfo"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "StoresSql",
+						"type": "DatasetReference"
+					},
+					"name": "StoresI",
+					"rejectedDataLinkedService": {
+						"referenceName": "Blob1",
+						"type": "LinkedServiceReference"
+					}
+				}
+			],
+			"transformations": [
+				{
+					"name": "JoinStoreinfo"
+				},
+				{
+					"name": "SelectStoresize"
+				},
+				{
+					"name": "SplitOnAreaToDefineSize"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          {Store ID} as string,",
+				"          {Store Name} as string,",
+				"          City as string,",
+				"          Latitude as string,",
+				"          Longitude as string,",
+				"          Area as string,",
+				"          {Number of sales people} as string,",
+				"          {Price per square meter} as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> Stores",
+				"source(output(",
+				"          Store_ID as integer,",
+				"          StoreSize as string,",
+				"          NumberOfCheckOuts as integer,",
+				"          DateOpened as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> Storeinfo",
+				"Stores, Storeinfo join(toInteger({Store ID}) == Store_ID,",
+				"     joinType:'right',",
+				"     matchType:'exact',",
+				"     ignoreSpaces: false,",
+				"     broadcast: 'auto')~> JoinStoreinfo",
+				"JoinStoreinfo select(mapColumn(",
+				"          {Store ID},",
+				"          {Store Name},",
+				"          City,",
+				"          Latitude,",
+				"          Longitude,",
+				"          Area,",
+				"          {Number of sales people},",
+				"          {Price per square meter},",
+				"          Store_ID,",
+				"          NumberOfCheckOuts",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> SelectStoresize",
+				"SelectStoresize split(toInteger(Area) <= 1000 ,",
+				"     Area > '1,000' && Area <= '2,000',",
+				"     disjoint: false) ~> SplitOnAreaToDefineSize@(Small, Medium, Large)",
+				"SelectStoresize sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError',",
+				"     partitionBy('hash', 1)) ~> StoresI"
+			]
+		}
+	}
+}

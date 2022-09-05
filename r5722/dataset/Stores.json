@@ -1,0 +1,56 @@
+{
+	"name": "Stores",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Blob1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "Stores.csv",
+				"container": "input1"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "Store ID",
+				"type": "String"
+			},
+			{
+				"name": "Store Name",
+				"type": "String"
+			},
+			{
+				"name": "City",
+				"type": "String"
+			},
+			{
+				"name": "Latitude",
+				"type": "String"
+			},
+			{
+				"name": "Longitude",
+				"type": "String"
+			},
+			{
+				"name": "Area",
+				"type": "String"
+			},
+			{
+				"name": "Number of sales people",
+				"type": "String"
+			},
+			{
+				"name": "Price per square meter",
+				"type": "String"
+			}
+		]
+	}
+}
