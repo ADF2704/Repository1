@@ -7,64 +7,7 @@
 		},
 		"annotations": [],
 		"type": "AzureSqlTable",
-		"schema": [
-			{
-				"name": "Receipt_Number",
-				"type": "int",
-				"precision": 10
-			},
-			{
-				"name": "Date",
-				"type": "datetime2",
-				"scale": 7
-			},
-			{
-				"name": "Time",
-				"type": "datetime2",
-				"scale": 7
-			},
-			{
-				"name": "Product",
-				"type": "nvarchar"
-			},
-			{
-				"name": "Quantity",
-				"type": "int",
-				"precision": 10
-			},
-			{
-				"name": "Price_each",
-				"type": "int",
-				"precision": 10
-			},
-			{
-				"name": "Total",
-				"type": "int",
-				"precision": 10
-			},
-			{
-				"name": "Payment_Type_cash_credit",
-				"type": "nvarchar"
-			},
-			{
-				"name": "Customer",
-				"type": "nvarchar"
-			},
-			{
-				"name": "Store",
-				"type": "nvarchar"
-			},
-			{
-				"name": "Cost_of_goods",
-				"type": "int",
-				"precision": 10
-			},
-			{
-				"name": "Shipment_date",
-				"type": "datetime2",
-				"scale": 7
-			}
-		],
+		"schema": [],
 		"typeProperties": {
 			"schema": "dbo",
 			"table": "Sales"
